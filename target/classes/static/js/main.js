@@ -2,7 +2,7 @@ $(document).ready(
     function(){
         $('#button').click(
             function(){
-                var toAdd = $('input[name=ListItem]').val();
+                var toAdd = $('input[name=ListItem]').val() + "    " + $('input[name=ListDate]').val();
                 $('ol').append('<li>' + toAdd + '</li>');
             });
 
