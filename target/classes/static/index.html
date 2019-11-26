@@ -5,9 +5,68 @@
     <title>Органайзер</title>
     <script src="/js/jquery-3.4.1.min.js"></script>
     <script src="/js/main.js"></script>
-    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <link rel="stylesheet" type="text/css" href="css/styles.css"/>
+    <style>
+        body {font-family: Arial, Helvetica, sans-serif;}
+        * {box-sizing: border-box;}
+        .open-button {
+            background-color : #2196F3;
+            color : white;
+            font-size : 15px;
+            font-weight : bold;
+            padding : 16px 20px;
+            border : none;
+            cursor : pointer;
+            opacity : 0.8;
+            position : center;
+            bottom : 10px;
+            right : 10px;
+            width : 280px;
+        }
+        .form-popup {
+            display : none;
+            position : fixed;
+            bottom : 0;
+            right : 15px;
+            border : #f11b1c solid 3px;
+            z-index : 9;
+        }
+        .form-container {
+            max-width : 300px;
+            padding : 10px;
+            background-color : white;
+        }
+        .form-container input[type="text"], .form-container input[type="password"] {
+            width : 100%;
+            padding : 15px;
+            margin : 5px 0 22px 0;
+            border : none;
+            background : #f1f1f1;
+        }
+        .form-container input[type="text"]:focus, .form-container input[type="password"]:focus {
+            background-color : #ddd;
+            outline : none;
+        }
+        .form-container .btn {
+            background-color : #1976D2;
+            color : white;
+            padding : 16px 20px;
+            border : none;
+            cursor : pointer;
+            width : 100%;
+            margin-bottom : 10px;
+            opacity : 0.8;
+            font-size : 15px;
+            font-weight : bold;
+        }
+        .form-container .cancel {
+            background-color : #448AFF;
+        }
+        .form-container .btn:hover, .open-button:hover {
+            opacity : 1;
+        }
 
-
+    </style>
 </head>
 <body>
 
@@ -15,27 +74,19 @@
     <form action="#" class="form-container">
         <h2>Добавление новой задачи</h2>
         <label>Задача:</label>
-            <input class="nameline" type="text" name="name">
+            <input type="text" name="name">
         <label>Описание:</label>
-            <input class="descline" type="text" name="description">
+            <input type="text" name="description">
         <hr>
         <button class="btn" id="save-task">Сохранить</button>
-        <button type="button" class="btn cancel" onclick="closeForm()">Закрыть</button>
+        <button type="button" class="btn">Закрыть</button>
     </form>
 </div>
 <h1>Список задач</h1>
-<button class="open-button" onclick="openForm()">Добавить задачу</button>
+<button class="open-button">Добавить задачу</button>
 <br>
 <br>
 <div id="task-list">
 </div>
 </body>
-<script>
-    function openForm() {
-        document.getElementById("myForm").style.display = "block";
-    }
-    function closeForm() {
-        document.getElementById("todo-form").style.display = "none";
-    }
-</script>
 </html>

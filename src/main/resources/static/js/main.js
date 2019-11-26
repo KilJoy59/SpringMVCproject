@@ -5,21 +5,27 @@ $(function() {
 
     const appendTask = function(data) {
 
-        var taskCode = 'Задача: ' + data.name + '<br>' + 'Описание: '
-                + data.description + '<br>' +
-            'Дата: ' + format_date + ' ' +  format_time;
+        var taskCode = '<a href="#" class="task-link" data-id="' + data.id + '">' + 'Задача: ' + data.name
+            + '</a>    <a href="#" class="task-del" data-id="' + data.id + '">delete</a><br>';
         $('#task-list')
             .append('<div>' + taskCode + '</div>');
     };
 
+    //get form
     $.get('/tasks/', function (response) {
         for (i in response) {
             appendTask(response[i]);
         }
     });
 
+    //open form
     $('.open-button').click(function () {
         $('.form-popup').css('display','flex');
+    });
+
+    //close form
+    $('.btn').click(function () {
+        $('.form-popup').css('display','none');
     });
 
     //Adding task
@@ -32,7 +38,7 @@ $(function() {
             success: function(response){
                 $('.form-popup').css('display', 'none');
                 var task = {};
-                task.id = response.id;
+                task.id = response;
                 var dataArray = $('#todo-form form').serializeArray();
                 for(i in dataArray) {
                     task[dataArray[i]['name']] = dataArray[i]['value'];
@@ -41,5 +47,45 @@ $(function() {
             }
         });
         return false;
+    });
+
+    //Getting task
+    $(document).on('click','.task-link', function () {
+        var link = $(this);
+        var taskId = link.data('id');
+        $.ajax({
+            method: "GET",
+            url: "/tasks/" + taskId,
+            success: function (response) {
+                var code = '<span> Описание: '
+                    + response.description + " " + format_date + " " + format_time + '</span>';
+                link.parent().append(code);
+            },
+            error: function (response) {
+                if (response.status == 404) {
+                    alert('Задача не найдена!');
+                }
+            }
+        });
+        return false
+    });
+
+    //Delete task
+    $(document).on('click', '.task-del', function(){
+        var link = $(this);
+        var taskId = link.data('id');
+        $.ajax({
+            method: "DELETE",
+            url: '/tasks/' + taskId,
+            success: function(response){
+                link.parent().remove();
+            },
+            error: function(response){
+                if(response.status == 404) {
+                    alert('Задача удалена!');
+                }
+            }
+        });
+        return true;
     });
 });

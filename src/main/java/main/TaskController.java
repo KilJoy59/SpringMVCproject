@@ -9,23 +9,29 @@ import java.util.List;
 @RestController
 public class TaskController {
 
-    @RequestMapping(value = "/tasks/", method = RequestMethod.GET)
+    @GetMapping("/tasks/")
     public List<Task> list() {
         return TaskStorage.getAllTasks();
     }
 
-    @RequestMapping(value = "/tasks/", method = RequestMethod.POST)
+    @PostMapping("/tasks/")
     public int add (Task task) {
 
        return TaskStorage.addTask(task);
     }
 
-    /*@GetMapping("/tasks/{id}")
+    @GetMapping("/tasks/{id}")
     public ResponseEntity getTask(@PathVariable int id) {
         Task task = TaskStorage.getTask(id);
         if (task == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
         return new ResponseEntity(task, HttpStatus.OK);
-    }*/
+    }
+
+    @DeleteMapping("/tasks/{id}")
+    public ResponseEntity deleteTask(@PathVariable int id) {
+        TaskStorage.deleteTask(id);
+        return ResponseEntity.status(HttpStatus.OK).body(null);
+    }
 }

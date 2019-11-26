@@ -15,7 +15,7 @@ public class Task {
 
     private String name;
 
-    private Date date;
+    private String description;
 
     public int getId() {
         return id;
@@ -33,11 +33,11 @@ public class Task {
         this.name = name;
     }
 
-    public Date getDate() {
-        return date;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
