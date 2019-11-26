@@ -1,49 +1,56 @@
-
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:400italic,400);
-
-body {
-    font: normal normal 13px/16px "Open Sans", sans-serif;
-    background: #dfdfdf;
+.open-button {
+    background-color : #2196F3;
+    color : white;
+    font-size : 15px;
+    font-weight : bold;
+    padding : 16px 20px;
+    border : none;
+    cursor : pointer;
+    opacity : 0.8;
+    position : fixed;
+    bottom : 23px;
+    right : 28px;
+    width : 280px;
 }
-
-.container{
-    padding: 20px;
-    width: 300px;
-    margin: 0 auto;
-    margin-top: 40px;
-    background: white;
-    border-radius: 5px;}
-
-form {
-    display: inline-block;
+.form-popup {
+    display : none;
+    position : fixed;
+    bottom : 0;
+    right : 15px;
+    border : #f11b1c solid 3px;
+    z-index : 9;
 }
-
-input{
-    padding: 4px 15px 4px 5px;
+.form-container {
+    max-width : 300px;
+    padding : 10px;
+    background-color : white;
 }
-
-#button{
-    display: inline-block;
-    background-color:#fc999b;
-    color:#ffffff;
-    border-radius: 5px;
-    text-align:center;
-    margin-top:2px;
-    padding: 5px 15px;
+.form-container input[type="text"], .form-container input[type="password"] {
+    width : 100%;
+    padding : 15px;
+    margin : 5px 0 22px 0;
+    border : none;
+    background : #f1f1f1;
 }
-
-#button:hover{
-    cursor: pointer;
-    opacity: .8;}
-
-ol {padding-left: 20px;}
-
-ol li {padding: 5px;color:#000;}
-
-ol li:nth-child(even){background: #dfdfdf;}
-
-.strike{text-decoration: line-through;}
-
-li:hover{
-    cursor: pointer;
+.form-container input[type="text"]:focus, .form-container input[type="password"]:focus {
+    background-color : #ddd;
+    outline : none;
+}
+.form-container .btn {
+    background-color : #1976D2;
+    color : white;
+    padding : 16px 20px;
+    border : none;
+    cursor : pointer;
+    width : 100%;
+    margin-bottom : 10px;
+    opacity : 0.8;
+    font-size : 15px;
+    font-weight : bold;
+}
+.form-container .cancel {
+    background-color : #448AFF;
+}
+.form-container .btn:hover, .open-button:hover {
+    opacity : 1;
 }
