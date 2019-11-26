@@ -49,24 +49,34 @@ $(function() {
         return false;
     });
 
+
+    var randomId = function () {
+        return '_' + Math.random().toString(36).substr(2, 9);
+    };
+
+
     //Getting task
     $(document).on('click','.task-link', function () {
-        var link = $(this);
-        var taskId = link.data('id');
-        $.ajax({
-            method: "GET",
-            url: "/tasks/" + taskId,
-            success: function (response) {
-                var code = '<span> Описание: '
-                    + response.description + " " + format_date + " " + format_time + '</span>';
-                link.parent().append(code);
-            },
-            error: function (response) {
-                if (response.status == 404) {
-                    alert('Задача не найдена!');
+            var link = $(this);
+            var taskId = link.data('id');
+        if(document.getElementsByClassName("desc-id-"+ taskId).length === 0) {
+            $.ajax({
+                method: "GET",
+                url: "/tasks/" + taskId,
+                success: function (response) {
+                    var code = '<span class= "desc-id-' + taskId + '"> Описание:'
+                        + response.description + " " + format_date + " " + format_time + '</span>';
+                    link.parent().append(code);
+
+                },
+                error: function (response) {
+                    if (response.status == 404) {
+                        alert('Задача не найдена!');
+                    }
                 }
-            }
-        });
+
+            });
+        }
         return false
     });
 
