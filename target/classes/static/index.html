@@ -66,12 +66,34 @@
             opacity : 1;
         }
 
+        .form-replace {
+            display : none;
+            position : absolute;
+            top : 500px;
+            left : 600px;
+            border : #3451f1 solid 3px;
+            z-index : 9;
+        }
+
+
     </style>
 </head>
 <body>
+<div name="taskForm" class="form-replace" id="replace-form">
+    <form action="#" class="form-container">
+        <h2>Замена задачи</h2>
+        <label>Задача:</label>
+        <input type="text" name="name" id="name">
+        <label>Описание:</label>
+        <input type="text" name="description" id="description">
+        <hr>
+        <button class="btn3" id="save-replace">Сохранить</button>
+        <button type="button" class="btn2">Закрыть</button>
+    </form>
+</div>
 
 <div class="form-popup" id="todo-form">
-    <form action="#" class="form-container">
+    <form action="/tasks/" class="form-container">
         <h2>Добавление новой задачи</h2>
         <label>Задача:</label>
             <input type="text" name="name">

@@ -1,12 +1,13 @@
-$(function() {
+$(function () {
     var now = new Date();
     var format_time= now.toLocaleTimeString("ru");
     var format_date = now.toLocaleDateString("ru");
 
-    const appendTask = function(data) {
 
+    const appendTask = function(data) {
         var taskCode = '<a href="#" class="task-link" data-id="' + data.id + '">' + 'Задача: ' + data.name
-            + '</a>    <a href="#" class="task-del" data-id="' + data.id + '">delete</a><br>';
+            + '</a> <a href="#" class="task-update" data-id="' + data.id + '">update</a> ' +
+            '<a href="#" class="task-del" data-id="' + data.id + '">delete</a><br>';
         $('#task-list')
             .append('<div>' + taskCode + '</div>');
     };
@@ -30,12 +31,18 @@ $(function() {
 
     //Adding task
     $('#save-task').click(function() {
-        var data = $('#todo-form form').serialize();
+        var form = $(this);
+        var nameVal = form.find('input[name="name"]').val();
+        var descriptionVal = form.find('input[name="description"]').val();
+        var url = '/tasks/';
+        var jsonString = JSON.stringify({name: nameVal, content: descriptionVal});
+        console.log(jsonString);
         $.ajax({
-            method: "POST",
-            url: '/tasks/',
-            data: data,
-            success: function(response){
+            type : 'POST',
+            url : url,
+            contentType: 'application/json',
+            data : jsonString,
+            success : function(response){
                 $('.form-popup').css('display', 'none');
                 var task = {};
                 task.id = response;
@@ -44,15 +51,12 @@ $(function() {
                     task[dataArray[i]['name']] = dataArray[i]['value'];
                 }
                 appendTask(task);
+            },
+            error: function(xhr, status, error){
+                alert(error);
             }
         });
-        return false;
     });
-
-
-    var randomId = function () {
-        return '_' + Math.random().toString(36).substr(2, 9);
-    };
 
 
     //Getting task
@@ -67,7 +71,6 @@ $(function() {
                     var code = '<span class= "desc-id-' + taskId + '"> Описание:'
                         + response.description + " " + format_date + " " + format_time + '</span>';
                     link.parent().append(code);
-
                 },
                 error: function (response) {
                     if (response.status == 404) {
@@ -96,6 +99,44 @@ $(function() {
                 }
             }
         });
+        return false;
+    });
+
+    //open form-replace
+    $(document).on('click', '.task-update', function () {
+        $('.form-replace').css('display','block');
+    });
+
+    //close form-raplce
+    $('.btn2').click(function () {
+        $('.form-replace').css('display','none');
+    });
+
+
+    //Update task
+    $('#save-replace').click(function() {
+        var link = $(this);
+        var taskId = link.data('id');
+        var data = $('#replace-form form').serialize();
+        $.ajax({
+            method: "PUT",
+            url: '/tasks/',
+            data: data,
+            success: function(response){
+                var oldName = document.getElementsByClassName('task-link');
+
+                $('.form-replace').css('display', 'none');
+                var task = {};
+                task.id = response;
+                var dataArray = $('#replace-form form').serializeArray();
+                for(i in dataArray) {
+                    task[dataArray[i]['name']] = dataArray[i]['value'];
+                }
+                oldName.removeChild(oldName.getElementsByTagName('span')[0]);
+            }
+        });
         return true;
     });
+
 });
+
