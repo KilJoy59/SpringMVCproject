@@ -19,7 +19,7 @@ public class TaskController {
     @PostMapping("/tasks/")
     public int add (@Valid @RequestBody Task task) {
 
-       return TaskStorage.addTask(task);
+        return TaskStorage.addTask(task);
     }
 
     @GetMapping("/tasks/{id}")
