@@ -31,6 +31,13 @@ public class TaskStorage {
         return null;
     }
 
+    public static Task editTask(int id, Task task) {
+        if (tasks.containsKey(id)) {
+            tasks.replace(id,task);
+        }
+        return null;
+    }
+
     public static void deleteTask(int taskId) {
         tasks.remove(taskId);
     }

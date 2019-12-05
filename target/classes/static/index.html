@@ -5,73 +5,24 @@
     <title>Органайзер</title>
     <script src="/js/jquery-3.4.1.min.js"></script>
     <script src="/js/main.js"></script>
-    <link rel="stylesheet" type="text/css" href="css/styles.css"/>
-    <style>
-        body {font-family: Arial, Helvetica, sans-serif;}
-        * {box-sizing: border-box;}
-        .open-button {
-            background-color : #2196F3;
-            color : white;
-            font-size : 15px;
-            font-weight : bold;
-            padding : 16px 20px;
-            border : none;
-            cursor : pointer;
-            opacity : 0.8;
-            position : center;
-            bottom : 10px;
-            right : 10px;
-            width : 280px;
-        }
-        .form-popup {
-            display : none;
-            position : absolute;
-            top : 10px;
-            left : 400px;
-            border : #3451f1 solid 3px;
-            z-index : 9;
-        }
-        .form-container {
-            max-width : 300px;
-            padding : 10px;
-            background-color : white;
-        }
-        .form-container input[type="text"], .form-container input[type="password"] {
-            width : 100%;
-            padding : 15px;
-            margin : 5px 0 22px 0;
-            border : none;
-            background : #f1f1f1;
-        }
-        .form-container input[type="text"]:focus, .form-container input[type="password"]:focus {
-            background-color : #ddd;
-            outline : none;
-        }
-        .form-container .btn {
-            background-color : #1976D2;
-            color : white;
-            padding : 16px 20px;
-            border : none;
-            cursor : pointer;
-            width : 100%;
-            margin-bottom : 10px;
-            opacity : 0.8;
-            font-size : 15px;
-            font-weight : bold;
-        }
-        .form-container .cancel {
-            background-color : #448AFF;
-        }
-        .form-container .btn:hover, .open-button:hover {
-            opacity : 1;
-        }
-
-    </style>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+<div class="form-replace" id="replace-form">
+    <form id="form-task2" action="#" class="form-container2">
+        <h2>Редактирование задачи</h2>
+        <label>Задача:</label>
+        <input type="text" name="editName">
+        <label>Описание:</label>
+        <input type="text" name="editDescription">
+        <hr>
+        <button class="btn2" id="save-replaceTask">Сохранить</button>
+        <button type="button" class="btn2">Закрыть</button>
+    </form>
+</div>
 
 <div class="form-popup" id="todo-form">
-    <form action="#" class="form-container">
+    <form id="form-task" action="#" class="form-container">
         <h2>Добавление новой задачи</h2>
         <label>Задача:</label>
             <input type="text" name="name">

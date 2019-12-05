@@ -1,0 +1,58 @@
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box;}
+.open-button {
+    background-color : #2196F3;
+    color : white;
+    font-size : 15px;
+    font-weight : bold;
+    padding : 16px 20px;
+    border : none;
+    cursor : pointer;
+    opacity : 0.8;
+    position : center;
+    bottom : 10px;
+    right : 10px;
+    width : 280px;
+}
+.form-popup, .form-replace {
+    display : none;
+    position : absolute;
+    top : 10px;
+    left : 400px;
+    border : #3451f1 solid 3px;
+    z-index : 9;
+}
+.form-container {
+    max-width : 300px;
+    padding : 10px;
+    background-color : white;
+}
+.form-container input[type="text"], .form-container2 input[type="text"] {
+    width : 100%;
+    padding : 15px;
+    margin : 5px 0 22px 0;
+    border : none;
+    background : #f1f1f1;
+}
+.form-container input[type="text"]:focus, .form-container2 input[type="text"]:focus {
+    background-color : #ddd;
+    outline : none;
+}
+.form-container, .btn, .btn2, .form-container2 {
+    background-color : #1976D2;
+    color : white;
+    padding : 16px 20px;
+    border : none;
+    cursor : pointer;
+    width : 100%;
+    margin-bottom : 10px;
+    opacity : 0.8;
+    font-size : 15px;
+    font-weight : bold;
+}
+.form-container, .cancel, .form-container2 {
+    background-color : #448AFF;
+}
+.form-container, .btn:hover, .open-button:hover, .form-container2 {
+    opacity : 1;
+}
