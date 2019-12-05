@@ -82,17 +82,13 @@ $(function() {
             success: function(response) {
                 var oldName = $('.record-' + taskId + ' .task-link').text();
                 var oldDescription = $('.record-' + taskId +' .desc-id-' + taskId).text();
-
-
-                appendTask(task);
+                oldName.text(nameVal);
+                oldDescription.text(descriptionVal);
             }
         });
         return false;
     });
-
-
-
-
+    
     //Getting task
     $(document).on('click','.task-link', function () {
         var link = $(this);
