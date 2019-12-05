@@ -41,8 +41,8 @@ public class TaskController {
     public ResponseEntity<Task> edit(@Valid @RequestBody Task task, @PathVariable int id) {
         Task newTask = TaskStorage.editTask(id,task);
         if (newTask == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            return ResponseEntity.notFound().build();
         }
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.ok().body(newTask);
     }
 }
