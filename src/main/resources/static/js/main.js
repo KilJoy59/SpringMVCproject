@@ -6,11 +6,9 @@ $(function() {
     const appendTask = function(data) {
 
         var taskCode = '<a href="#" class="task-link" data-id="' + data.id + '">' + 'Задача: ' + data.name
-            + '</a>  ' +
-            '<a href="#" class="task-edit" data-id="' + data.id +'">edit</a>  ' +
-            '<a href="#" class="task-del" data-id="' + data.id + '">delete</a>';
+            + '</a>    <a href="#" class="task-del" data-id="' + data.id + '">delete</a><br>';
         $('#task-list')
-            .append('<div class="record-' + data.id + '">' + taskCode + '</div>');
+            .append('<div>' + taskCode + '</div>');
     };
 
     //get form
@@ -30,18 +28,13 @@ $(function() {
         $('.form-popup').css('display','none');
     });
 
-    //Adding task1
+    //Adding task
     $('#save-task').click(function() {
-        let form = $('#form-task');
-        let nameVal = form.find('input[name="name"]').val();
-        let descriptionVal = form.find('input[name="description"]').val();
-        let url = '/tasks/';
-        let jsonString = JSON.stringify({name : nameVal, description: descriptionVal});
+        var data = $('#todo-form form').serialize();
         $.ajax({
             method: "POST",
-            url: url,
-            data: jsonString,
-            contentType: 'application/json',
+            url: '/tasks/',
+            data: data,
             success: function(response){
                 $('.form-popup').css('display', 'none');
                 var task = {};
@@ -56,41 +49,10 @@ $(function() {
         return false;
     });
 
-    //open form edit-task
-    $(document).on('click','.task-edit', function () {
-       $('#replace-form').css('display','flex');
-    });
 
-    //close form edit-task
-    $('.btn2').click(function () {
-        $('.form-replace').css('display','none');
-    });
-
-    //Edit task
-    $('#save-replaceTask').click(function() {
-        let form = $('#form-task2');
-        let nameVal = form.find('input[name="editName"]').val();
-        let descriptionVal = form.find('input[name="editDescription"]').val();
-        var taskId = $(this).data('id');
-        let url = '/tasks/'+taskId;
-        let jsonString2 = JSON.stringify({name : nameVal, description: descriptionVal});
-        $.ajax({
-            method: "PUT",
-            url: url,
-            data: jsonString2,
-            contentType: 'application/json',
-            success: function(response) {
-                var oldName = $('.record-' + taskId + ' .task-link').text();
-                var oldDescription = $('.record-' + taskId +' .desc-id-' + taskId).text();
-
-
-                appendTask(task);
-            }
-        });
-        return false;
-    });
-
-
+    var randomId = function () {
+        return '_' + Math.random().toString(36).substr(2, 9);
+    };
 
 
     //Getting task
