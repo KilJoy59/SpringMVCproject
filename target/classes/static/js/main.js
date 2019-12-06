@@ -38,7 +38,6 @@ function saveEditTask() {
     let descriptionVal = form.find('input[name="editDescription"]').val();
     let url = '/tasks/' + idTask;
     let jsonString2 = JSON.stringify({id : idTask, name : nameVal, description : descriptionVal});
-    debugger;
     $.ajax({
         method: "PUT",
         url: url,
