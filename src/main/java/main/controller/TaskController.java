@@ -1,28 +1,26 @@
-package main;
-import main.model.ToDoRepository;
+package main.controller;
+import main.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import main.model.Task;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class TaskController {
 
     @Autowired
-    private ToDoRepository toDoRepository;
+    private TaskService taskService;
 
     @GetMapping("/tasks/")
     public List<Task> list() {
-     Iterable<Task> iterable = toDoRepository.findAll();
+     Iterable<Task> iterableTasks = taskService.getAllTasks();
      List<Task> tasks = new ArrayList<>();
-     for (Task task : iterable) {
+     for (Task task : iterableTasks) {
          tasks.add(task);
      }
         return tasks;
@@ -30,31 +28,30 @@ public class TaskController {
 
     @PostMapping("/tasks/")
     public int add (@Valid @RequestBody Task task) {
-        return toDoRepository.save(task).getId();
+        return taskService.addTask(task);
     }
 
     @GetMapping("/tasks/{id}")
     public ResponseEntity getTask(@PathVariable int id) {
-        Optional<Task> optionalTask = toDoRepository.findById(id);
-        if (!optionalTask.isPresent()) {
+        Task task = taskService.getTask(id);
+        if (task == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-        return new ResponseEntity(optionalTask.get(), HttpStatus.OK);
+        return new ResponseEntity(task, HttpStatus.OK);
     }
 
     @DeleteMapping("/tasks/{id}")
     public ResponseEntity deleteTask(@PathVariable int id) {
-        toDoRepository.deleteById(id);
+        taskService.deleteTask(id);
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
     @PutMapping("/tasks/{id}")
     public ResponseEntity<Task> edit(@Valid @RequestBody Task task, @PathVariable int id) {
-        toDoRepository.deleteById(id);
-         Task newTask = toDoRepository.save(task);
+        Task newTask = taskService.editTask(id,task);
         if (newTask == null) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-        return ResponseEntity.ok().body(newTask);
+        return new ResponseEntity(newTask,HttpStatus.OK);
     }
 }

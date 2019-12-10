@@ -2,20 +2,41 @@ var idTask = null;
 var format_time = new Date().toLocaleTimeString("ru");
 var format_date = new Date().toLocaleDateString("ru");
 
+
 //open form edit-task
 function editTask(id) {
     $('#replace-form').css('display','flex');
     idTask = id;
 }
 //Getting task
-function getTask(id) {
+$(document).on('click','.task-link', function(){
+    var link = $(this);
+    var taskId = link.data('id');
+    if(document.getElementsByClassName("desc"+taskId).length === 0) {
+        $.ajax({
+            method: "GET",
+            url: '/tasks/' + taskId,
+            success: function (response) {
+                var code = '<span class="desc' + taskId + '" data-id="' + taskId + '">Описание: '
+                    + response.description + " " + format_date + " " + format_time + '</span>';
+                link.parent().append(code);
+            },
+            error: function (response) {
+                if (response.status == 404) {
+                    alert('Задача не найдена!');
+                }
+            }
+        });
+    }
+});
+/*function getTask(id) {
     var link = $('.record-' + id +' .task-link');
-    if(document.getElementsByClassName("desc-id-"+ id).length === 0) {
+    if(document.getElementsByClassName("desc"+id).length === 0) {
         $.ajax({
             method: "GET",
             url: "/tasks/" + id,
             success: function (response) {
-                var code = '<span class= "desc-id-' + id + '"> Описание:'
+                var code = '<span class="desc'+id+'" data-id="'+ id + '"> Описание:'
                     + response.description + format_date + format_time + '</span>';
                 link.parent().append(code);
 
@@ -29,7 +50,7 @@ function getTask(id) {
         });
     }
     return false
-}
+}*/
 
 //Edit task
 function saveEditTask() {
@@ -53,22 +74,23 @@ function saveEditTask() {
     return true;
 }
 
+
 $(function() {
     const appendTask = function(data) {
 
-        var taskCode = '<a href="#" class="task-link" data-id="' + data.id +'" onclick="getTask(' + data.id + ')">' + 'Задача: ' + data.name + '</a>  ' +
+        var taskCode = '<a href="#" class="task-link" data-id="' + data.id +'">' + data.name + '</a>  ' +
             '<a href="#" class="task-edit" data-id="' + data.id +'" onclick="editTask(' + data.id + ')"> edit </a>' +
             '<a href="#" class="task-del" data-id="' + data.id + '"> delete </a>';
         $('#task-list')
             .append('<div class="record-' + data.id + '">' + taskCode + '</div>');
     };
 
-    //get form
+    /*//get tasks
     $.get('/tasks/', function (response) {
         for (i in response) {
             appendTask(response[i]);
         }
-    });
+    });*/
 
     //open form
     $('.open-button').click(function () {

@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Органайзер</title>
     <script src="/js/jquery-3.4.1.min.js"></script>
     <script src="/js/main.js"></script>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
+
 </head>
 <body>
 <div class="form-replace" id="replace-form">
@@ -38,6 +39,12 @@
 <br>
 <br>
 <div id="task-list">
+    <div th:each="task : ${tasks}">
+        <a href="#" class="task-link" th:attr="data-id=${task.id}" th:text="${task.name}"></a>
+        <a href="#" class="task-edit" th:attr="data-id=${task.id}" th:onclick="|editTask(${task.id})|" th:text="edit"></a>
+        <a href="#" class="task-del" th:attr="data-id=${task.id}" th:text="delete" ></a>
+        <span></span>
+    </div>
 </div>
 </body>
 </html>
